@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  kibana:
+    container_name: kibana
+    image: docker.elastic.co/kibana/kibana:7.10.0
+    networks:
+      - internal_network
+    environment:
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+    depends_on:
+      - elasticsearch
+    restart: always
+
+networks:
+  internal_network:
+    external: true
