@@ -89,22 +89,6 @@ Este script faz o seguinte:
 
   * Interface de visualização de dados do Elasticsearch.
 
-### Variáveis de ambiente
-
-Você pode usar um arquivo `.env` para definir variáveis como credenciais ou portas. Aqui está um exemplo:
-
-```env
-MONGODB_PORT=27017
-MONGODB_USERNAME=admin
-MONGODB_PASSWORD=securepassword
-```
-
-### Personalizações possíveis
-
-* **Redes**: Você pode adicionar outras redes ou mudar os nomes das redes existentes no arquivo `docker-compose.yml`.
-* **Volumes**: Defina volumes persistentes para Elasticsearch e outros serviços, caso precise.
-* **Proxies**: Configure o Nginx Proxy Manager para redirecionar tráfego para outras aplicações conforme necessário.
-
 ### Scripts adicionais
 
 * **infra-up.sh**: Cria as redes e sobe os containers.
