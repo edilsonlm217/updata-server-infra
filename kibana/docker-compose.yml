@@ -8,8 +8,6 @@ services:
       - internal_network
     environment:
       - ELASTICSEARCH_URL=http://elasticsearch:9200
-    depends_on:
-      - elasticsearch
     restart: always
 
 networks:
