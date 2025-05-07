@@ -8,6 +8,7 @@ rollback() {
   docker-compose -f nginx/docker-compose.yml down --volumes --remove-orphans || true
   docker-compose -f elasticsearch/docker-compose.yml down --volumes --remove-orphans || true
   docker-compose -f kibana/docker-compose.yml down --volumes --remove-orphans || true
+  docker-compose -f portainer/docker-compose.yml down --volumes --remove-orphans || true
   docker network rm nginx_network || true
   docker network rm internal_network || true
 }
@@ -37,5 +38,8 @@ docker-compose -f elasticsearch/docker-compose.yml up -d || { echo "Erro ao subi
 
 echo "🚀 Subindo Kibana..."
 docker-compose -f kibana/docker-compose.yml up -d || { echo "Erro ao subir Kibana"; rollback; exit 1; }
+
+echo "🚀 Subindo Portainer..."
+docker-compose -f portainer/docker-compose.yml up -d || { echo "Erro ao subir Portainer"; rollback; exit 1; }
 
 echo "✅ Infraestrutura completa e em execução!"
