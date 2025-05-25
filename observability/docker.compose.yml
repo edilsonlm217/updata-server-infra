@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   elasticsearch:
-    container_name: elasticsearch
+    container_name: elasticsearch_1
     image: "docker.elastic.co/elasticsearch/elasticsearch:${ELASTIC_VERSION}"  # 🔄 Versão dinâmica
     networks:
       - internal_network  # 🕸️ Comunicação privada entre serviços (ex: com Kibana)
@@ -21,7 +21,7 @@ services:
     restart: always  # 🔁 Reinício automático
 
   kibana:
-    container_name: kibana
+    container_name: kibana_1
     image: "docker.elastic.co/kibana/kibana:${ELASTIC_VERSION}"  # Mesma versão do ES
     networks:
       - internal_network
