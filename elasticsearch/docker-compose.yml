@@ -2,28 +2,28 @@ version: '3.8'
 
 services:
   elasticsearch:
-    container_name: elasticsearch
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.13.4  # 🔄 Versão estável recente
+    container_name: elasticsearch_1
+    image: "docker.elastic.co/elasticsearch/elasticsearch:${ELASTIC_VERSION}"  # 🔄 Versão dinâmica
     networks:
       - internal_network  # 🕸️ Comunicação privada entre serviços (ex: com Kibana)
     environment:
-      - discovery.type=single-node  # 🧪 Indica que é um cluster de nó único (sem discovery multicast)
-      - bootstrap.memory_lock=true  # 🚫 Impede que o sistema use swap para o processo do ES (melhora performance)
-      - xpack.security.enabled=true  # 🔐 Habilita autenticação com usuário/senha e outras features de segurança
-      - ELASTIC_PASSWORD=admin123  # 👤 Define a senha do superusuário "elastic" (caso não defina, ES gera uma aleatória no log)
-      - "ES_JAVA_OPTS=-Xms2g -Xmx2g"  # 🧠 Reserva 2GB de heap para a JVM (ideal que ambos valores sejam iguais)
+      - discovery.type=single-node  # 🧪 Cluster nó único
+      - bootstrap.memory_lock=true  # 🚫 Evita swap
+      - xpack.security.enabled=true  # 🔐 Segurança ativada
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}  # 👤 Senha via variável
+      - "ES_JAVA_OPTS=${ES_JAVA_OPTS}"  # 🧠 Heap da JVM
     ulimits:
       memlock:
         soft: -1
-        hard: -1  # ✅ Permite o uso do travamento de memória com `bootstrap.memory_lock`
+        hard: -1  # ✅ Travamento de memória
     volumes:
-      - elasticsearch_data:/usr/share/elasticsearch/data  # 💾 Persistência dos dados entre reinícios
-    restart: always  # 🔁 Garante que reinicie automaticamente em caso de falhas
+      - elasticsearch_data:/usr/share/elasticsearch/data  # 💾 Dados persistentes
+    restart: always  # 🔁 Reinício automático
 
 volumes:
   elasticsearch_data:
-    driver: local  # 📦 Volume local padrão para persistência de dados
+    driver: local  # 📦 Volume local para persistência
 
 networks:
   internal_network:
-    external: true  # 🌐 Presume que a rede já existe (criada fora do compose)
+    external: true  # 🌐 Rede já criada externamente

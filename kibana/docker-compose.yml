@@ -2,16 +2,16 @@ version: '3.8'
 
 services:
   kibana:
-    container_name: kibana
-    image: docker.elastic.co/kibana/kibana:8.13.4  # Atualizar para 8.x
+    container_name: kibana_1
+    image: "docker.elastic.co/kibana/kibana:${ELASTIC_VERSION}"  # Mesma versão do ES
     networks:
       - internal_network
     environment:
-      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
-      - ELASTICSEARCH_USERNAME=elastic                  # Usuário configurado no ES
-      - ELASTICSEARCH_PASSWORD=admin123                  # Senha configurada no ES
+      - ELASTICSEARCH_HOSTS=${ELASTICSEARCH_HOSTS}
+      - ELASTICSEARCH_USERNAME=${ELASTICSEARCH_USERNAME}  # Usuário via variável
+      - ELASTICSEARCH_PASSWORD=${ELASTICSEARCH_PASSWORD}  # Senha via variável
     restart: always
 
 networks:
   internal_network:
-    external: true
+    external: true  # 🌐 Rede já criada externamente
